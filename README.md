@@ -1,1 +1,1 @@
-# khabibki06.github.io-kajian-scanner-
+# khabibki06.github.io-sm-qrscan
