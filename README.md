@@ -1,1 +1,1 @@
-# khabibki06.github.io-sm-qrscan
+# khabibki06.github.io-sc-qrscan
