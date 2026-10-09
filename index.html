@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width,
+                 initial-scale=1,
+                 maximum-scale=1,
+                 user-scalable=no">
+
+  <title>QRCode Scanner Semusic Cinta Rumaisya 2026</title>
+
+  <script src="https://unpkg.com/html5-qrcode"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: white;
+      text-align: center;
+    }
+
+    .header {
+      padding: 18px 10px 10px;
+    }
+
+    .header h1 {
+      font-size: 24px;
+      margin: 0 0 5px;
+    }
+
+    .header p {
+      margin: 0;
+      color: #bbb;
+      font-size: 14px;
+    }
+
+    #reader {
+      width: 100%;
+      max-width: 550px;
+      margin: 10px auto;
+      background: black;
+    }
+
+    #status {
+      width: 92%;
+      max-width: 500px;
+      margin: 15px auto;
+      padding: 18px;
+      border-radius: 12px;
+      font-size: 20px;
+      font-weight: bold;
+      background: #333;
+    }
+
+    .success {
+      background: #198754 !important;
+    }
+
+    .waiting {
+      background: #333 !important;
+    }
+
+    .error {
+      background: #b02a37 !important;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 14px 25px;
+      border: none;
+      border-radius: 10px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #startButton {
+      background: #0d6efd;
+      color: white;
+    }
+
+    #restartButton {
+      background: #ffc107;
+      color: #111;
+      display: none;
+    }
+  </style>
+</head>
+
+
+<body>
+
+<div class="header">
+  <h1>📷 Scanner QR Code Semusim Cinta 2026</h1>
+
+  <p>
+    Arahkan kamera ke QR tiket peserta
+  </p>
+</div>
+
+
+<div id="reader"></div>
+
+
+<div id="status" class="waiting">
+  Tekan tombol MULAI SCAN
+</div>
+
+
+<button id="startButton" onclick="startScanner()">
+  📷 MULAI SCAN
+</button>
+
+
+<button id="restartButton" onclick="resumeScanner()">
+  SCAN BERIKUTNYA
+</button>
+
+
+<script>
+
+let html5QrCode = null;
+
+let scannerRunning = false;
+
+let lastCode = "";
+
+let lastScanTime = 0;
+
+
+/* =====================================
+   START CAMERA
+===================================== */
+
+async function startScanner() {
+
+  document.getElementById("startButton").style.display = "none";
+
+  setStatus(
+    "Meminta izin kamera...",
+    "waiting"
+  );
+
+
+  try {
+
+    html5QrCode =
+      new Html5Qrcode("reader");
+
+
+    const config = {
+
+      fps: 12,
+
+      qrbox: function(viewfinderWidth,
+                      viewfinderHeight) {
+
+        let size =
+          Math.min(
+            viewfinderWidth,
+            viewfinderHeight
+          ) * 0.70;
+
+        return {
+          width: size,
+          height: size
+        };
+
+      },
+
+      aspectRatio: 1.0
+
+    };
+
+
+    await html5QrCode.start(
+
+      {
+        facingMode: "environment"
+      },
+
+      config,
+
+      onScanSuccess,
+
+      onScanFailure
+
+    );
+
+
+    scannerRunning = true;
+
+
+    setStatus(
+      "Siap scan tiket",
+      "waiting"
+    );
+
+
+  } catch (err) {
+
+    console.error(err);
+
+    setStatus(
+      "❌ Kamera tidak dapat dibuka",
+      "error"
+    );
+
+
+    document.getElementById(
+      "startButton"
+    ).style.display = "inline-block";
+
+  }
+
+}
+
+
+
+/* =====================================
+   QR SUCCESS
+===================================== */
+
+function onScanSuccess(decodedText) {
+
+  const now = Date.now();
+
+
+  /*
+   * Anti duplicate.
+   *
+   * QR yang sama tidak boleh
+   * diproses berulang-ulang
+   * dalam waktu 3 detik.
+   */
+
+  if (
+    decodedText === lastCode &&
+    now - lastScanTime < 3000
+  ) {
+
+    return;
+
+  }
+
+
+  lastCode = decodedText;
+  lastScanTime = now;
+
+
+  /*
+   * Pause kamera supaya satu tiket
+   * hanya dikirim satu kali.
+   */
+
+  try {
+
+    html5QrCode.pause(true);
+
+  } catch (e) {
+
+    console.log(e);
+
+  }
+
+
+  setStatus(
+    "✅ QR terbaca<br>" +
+    escapeHtml(decodedText),
+    "success"
+  );
+
+
+  /*
+   * Bunyi beep
+   */
+
+  playBeep();
+
+
+  /*
+   * Kirim QR ke halaman
+   * Google Apps Script
+   * yang membuka scanner ini.
+   */
+
+  if (window.opener) {
+
+    window.opener.postMessage(
+
+      {
+        type: "QR_SCAN",
+        value: decodedText
+      },
+
+      "*"
+
+    );
+
+  }
+
+
+  /*
+   * tampilkan tombol scan berikutnya
+   */
+
+  document.getElementById(
+    "restartButton"
+  ).style.display = "inline-block";
+
+}
+
+
+
+/* =====================================
+   QR FAILURE
+===================================== */
+
+function onScanFailure(error) {
+
+  /*
+   * Jangan tampilkan error terus menerus.
+   * Scanner memang gagal membaca
+   * hampir setiap frame sampai menemukan QR.
+   */
+
+}
+
+
+
+/* =====================================
+   RESUME SCANNER
+===================================== */
+
+function resumeScanner() {
+
+  document.getElementById(
+    "restartButton"
+  ).style.display = "none";
+
+
+  setStatus(
+    "Siap scan tiket berikutnya",
+    "waiting"
+  );
+
+
+  try {
+
+    html5QrCode.resume();
+
+  } catch (err) {
+
+    console.error(err);
+
+  }
+
+}
+
+
+
+/* =====================================
+   STATUS
+===================================== */
+
+function setStatus(message, type) {
+
+  const element =
+    document.getElementById("status");
+
+
+  element.className = type;
+
+  element.innerHTML = message;
+
+}
+
+
+
+/* =====================================
+   BEEP
+===================================== */
+
+function playBeep() {
+
+  try {
+
+    const AudioContext =
+      window.AudioContext ||
+      window.webkitAudioContext;
+
+
+    const context =
+      new AudioContext();
+
+
+    const oscillator =
+      context.createOscillator();
+
+
+    const gain =
+      context.createGain();
+
+
+    oscillator.type = "sine";
+
+    oscillator.frequency.value = 900;
+
+
+    gain.gain.value = 0.12;
+
+
+    oscillator.connect(gain);
+
+    gain.connect(context.destination);
+
+
+    oscillator.start();
+
+
+    setTimeout(function() {
+
+      oscillator.stop();
+
+      context.close();
+
+    }, 120);
+
+
+  } catch (e) {
+
+    console.log("Beep unavailable");
+
+  }
+
+}
+
+
+
+/* =====================================
+   ESCAPE HTML
+===================================== */
+
+function escapeHtml(text) {
+
+  return String(text || "")
+
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+}
+
+</script>
+
+
+</body>
+</html>
