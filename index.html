@@ -1,182 +1,645 @@
 <!DOCTYPE html>
+
 <html lang="id">
+
 <head>
+
   <meta charset="UTF-8">
 
-  <meta name="viewport"
-        content="width=device-width,
-                 initial-scale=1,
-                 maximum-scale=1,
-                 user-scalable=no">
+  <meta
+    name="viewport"
+    content="
+      width=device-width,
+      initial-scale=1,
+      maximum-scale=1,
+      user-scalable=no
+    "
+  >
 
-  <title>QRCode Scanner Semusim Cinta Rumaisya Korsel 2026</title>
 
-  <script src="https://unpkg.com/html5-qrcode"></script>
+  <title>
+    Scanner Kajian Akbar
+  </title>
+
+
+  <!-- QR SCANNER LIBRARY -->
+
+  <script
+    src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js">
+  </script>
+
 
   <style>
+
     * {
-      box-sizing: border-box;
+      box-sizing:
+        border-box;
     }
+
 
     body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-      background: #111;
-      color: white;
-      text-align: center;
+
+      margin:
+        0;
+
+      padding:
+        0;
+
+      background:
+        #111;
+
+      color:
+        white;
+
+      font-family:
+        Arial,
+        sans-serif;
+
+      text-align:
+        center;
+
     }
 
-    .header {
-      padding: 18px 10px 10px;
+
+    .container {
+
+      width:
+        100%;
+
+      max-width:
+        600px;
+
+      margin:
+        auto;
+
+      padding:
+        15px;
+
     }
 
-    .header h1 {
-      font-size: 24px;
-      margin: 0 0 5px;
+
+    h1 {
+
+      margin:
+        10px 0 5px;
+
+      font-size:
+        26px;
+
     }
 
-    .header p {
-      margin: 0;
-      color: #bbb;
-      font-size: 14px;
+
+    .subtitle {
+
+      color:
+        #aaa;
+
+      margin-bottom:
+        15px;
+
     }
 
-    #reader {
-      width: 100%;
-      max-width: 550px;
-      margin: 10px auto;
-      background: black;
+
+    #setup {
+
+      background:
+        #222;
+
+      padding:
+        20px;
+
+      border-radius:
+        14px;
+
+      margin-bottom:
+        15px;
+
     }
 
-    #status {
-      width: 92%;
-      max-width: 500px;
-      margin: 15px auto;
-      padding: 18px;
-      border-radius: 12px;
-      font-size: 20px;
-      font-weight: bold;
-      background: #333;
+
+    input {
+
+      width:
+        100%;
+
+      max-width:
+        350px;
+
+      padding:
+        15px;
+
+      font-size:
+        20px;
+
+      text-align:
+        center;
+
+      border:
+        none;
+
+      border-radius:
+        10px;
+
+      margin-bottom:
+        15px;
+
     }
 
-    .success {
-      background: #198754 !important;
-    }
-
-    .waiting {
-      background: #333 !important;
-    }
-
-    .error {
-      background: #b02a37 !important;
-    }
 
     button {
-      margin-top: 10px;
-      padding: 14px 25px;
-      border: none;
-      border-radius: 10px;
-      font-size: 18px;
-      font-weight: bold;
-      cursor: pointer;
+
+      width:
+        100%;
+
+      max-width:
+        350px;
+
+      padding:
+        16px;
+
+      border:
+        none;
+
+      border-radius:
+        10px;
+
+      font-size:
+        20px;
+
+      font-weight:
+        bold;
+
+      cursor:
+        pointer;
+
     }
+
 
     #startButton {
-      background: #0d6efd;
-      color: white;
+
+      background:
+        #1565c0;
+
+      color:
+        white;
+
     }
 
-    #restartButton {
-      background: #ffc107;
-      color: #111;
-      display: none;
+
+    #reader {
+
+      width:
+        100%;
+
+      margin:
+        15px auto;
+
+      background:
+        black;
+
+      border-radius:
+        12px;
+
+      overflow:
+        hidden;
+
     }
+
+
+    #status {
+
+      width:
+        100%;
+
+      min-height:
+        110px;
+
+      margin:
+        15px auto;
+
+      padding:
+        20px;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      flex-direction:
+        column;
+
+      border-radius:
+        14px;
+
+      font-size:
+        20px;
+
+      font-weight:
+        bold;
+
+      background:
+        #333;
+
+    }
+
+
+    .waiting {
+
+      background:
+        #333 !important;
+
+    }
+
+
+    .loading {
+
+      background:
+        #174a7e !important;
+
+    }
+
+
+    .success {
+
+      background:
+        #198754 !important;
+
+    }
+
+
+    .used {
+
+      background:
+        #a06a00 !important;
+
+    }
+
+
+    .invalid {
+
+      background:
+        #b02a37 !important;
+
+    }
+
+
+    .error {
+
+      background:
+        #842029 !important;
+
+    }
+
+
+    .big {
+
+      font-size:
+        28px;
+
+      margin-bottom:
+        8px;
+
+    }
+
+
+    .person-name {
+
+      font-size:
+        26px;
+
+      margin-top:
+        8px;
+
+    }
+
+
+    .ticket-code {
+
+      margin-top:
+        8px;
+
+      font-size:
+        18px;
+
+      opacity:
+        .9;
+
+    }
+
+
+    #requestFrame {
+
+      position:
+        absolute;
+
+      width:
+        1px;
+
+      height:
+        1px;
+
+      border:
+        0;
+
+      opacity:
+        0;
+
+      pointer-events:
+        none;
+
+    }
+
   </style>
+
 </head>
 
 
 <body>
 
-<div class="header">
-  <h1>📷 Scanner QR Code Semusim Cinta Rumaisya Korsel 2026</h1>
 
-  <p>
-    Arahkan kamera ke QR tiket peserta
-  </p>
+<div class="container">
+
+
+  <h1>
+
+    📷 Scanner Kajian Akbar
+
+  </h1>
+
+
+  <div class="subtitle">
+
+    Semusim Cinta Rumaisa Korsel
+
+  </div>
+
+
+
+  <!-- ===========================
+       PANITIA SETUP
+  ============================ -->
+
+  <div id="setup">
+
+
+    <input
+      id="pin"
+      type="password"
+      inputmode="numeric"
+      placeholder="PIN Panitia"
+      autocomplete="off"
+    >
+
+
+    <br>
+
+
+    <button
+      id="startButton"
+      onclick="startScanner()"
+    >
+
+      MULAI SCAN
+
+    </button>
+
+
+  </div>
+
+
+
+  <!-- ===========================
+       CAMERA
+  ============================ -->
+
+  <div id="reader"></div>
+
+
+
+  <!-- ===========================
+       RESULT
+  ============================ -->
+
+  <div
+    id="status"
+    class="waiting"
+  >
+
+    Masukkan PIN panitia
+    kemudian tekan MULAI SCAN
+
+  </div>
+
+
+
+  <!--
+    Apps Script response akan
+    dimuat di sini.
+
+    Tidak ada kamera di iframe.
+  -->
+
+  <iframe
+    id="requestFrame"
+    title="checkin"
+  ></iframe>
+
+
 </div>
 
-
-<div id="reader"></div>
-
-
-<div id="status" class="waiting">
-  Tekan tombol MULAI SCAN
-</div>
-
-
-<button id="startButton" onclick="startScanner()">
-  📷 MULAI SCAN
-</button>
-
-
-<button id="restartButton" onclick="resumeScanner()">
-  SCAN BERIKUTNYA
-</button>
 
 
 <script>
 
-let html5QrCode = null;
 
-let scannerRunning = false;
-
-let lastCode = "";
-
-let lastScanTime = 0;
+/*************************************************
+ * CONFIG
+ *************************************************/
 
 
-/* =====================================
-   START CAMERA
-===================================== */
+/*
+ * GANTI URL INI dengan URL deployment
+ * Apps Script /exec Anda.
+ *
+ * CONTOH:
+ *
+ * https://script.google.com/macros/s/
+ * AKfycbxxxxxxxxxxxxxxxx/exec
+ */
+
+const APPS_SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbz_OMrlvtVqLHcDGQ9cwLMQOpWNjLrOFFYcCiXRRK1xarWyLgxq8GgCV_HL1Wsed-Dn/exec";
+
+
+const CHECKIN_TIMEOUT =
+  15000;
+
+
+const DUPLICATE_DELAY =
+  6000;
+
+
+
+/*************************************************
+ * GLOBAL
+ *************************************************/
+
+let html5QrCode =
+  null;
+
+
+let scannerRunning =
+  false;
+
+
+let processing =
+  false;
+
+
+let currentRequestId =
+  null;
+
+
+let requestTimer =
+  null;
+
+
+let lastCode =
+  "";
+
+
+let lastCodeTime =
+  0;
+
+
+let audioContext =
+  null;
+
+
+
+/*************************************************
+ * START SCANNER
+ *************************************************/
 
 async function startScanner() {
 
-  document.getElementById("startButton").style.display = "none";
+
+  const pin =
+    document
+      .getElementById("pin")
+      .value
+      .trim();
+
+
+  if (!pin) {
+
+    setStatus(
+
+      "Masukkan PIN panitia terlebih dahulu.",
+
+      "error"
+
+    );
+
+    return;
+
+  }
+
+
+  /*
+   * Simpan hanya selama tab ini terbuka.
+   */
+
+  sessionStorage.setItem(
+    "checkinPin",
+    pin
+  );
+
+
+  /*
+   * Audio context dibuat setelah
+   * user menekan tombol supaya
+   * beep bekerja di mobile.
+   */
+
+  try {
+
+    const AudioCtx =
+      window.AudioContext ||
+      window.webkitAudioContext;
+
+
+    audioContext =
+      new AudioCtx();
+
+
+    await audioContext.resume();
+
+  }
+
+  catch (e) {}
+
+
+  document
+    .getElementById(
+      "startButton"
+    )
+    .disabled =
+      true;
+
 
   setStatus(
+
     "Meminta izin kamera...",
+
     "waiting"
+
   );
 
 
   try {
 
+
     html5QrCode =
-      new Html5Qrcode("reader");
+      new Html5Qrcode(
+        "reader"
+      );
 
 
     const config = {
 
-      fps: 12,
+      fps:
+        12,
 
-      qrbox: function(viewfinderWidth,
-                      viewfinderHeight) {
 
-        let size =
-          Math.min(
-            viewfinderWidth,
-            viewfinderHeight
-          ) * 0.70;
+      qrbox:
+        function(
+          viewfinderWidth,
+          viewfinderHeight
+        ) {
 
-        return {
-          width: size,
-          height: size
-        };
+          const size =
+            Math.min(
+              viewfinderWidth,
+              viewfinderHeight
+            ) * 0.72;
 
-      },
 
-      aspectRatio: 1.0
+          return {
+
+            width:
+              Math.floor(size),
+
+            height:
+              Math.floor(size)
+
+          };
+
+        }
 
     };
 
@@ -184,7 +647,8 @@ async function startScanner() {
     await html5QrCode.start(
 
       {
-        facingMode: "environment"
+        facingMode:
+          "environment"
       },
 
       config,
@@ -196,28 +660,57 @@ async function startScanner() {
     );
 
 
-    scannerRunning = true;
+    scannerRunning =
+      true;
+
+
+    document
+      .getElementById(
+        "setup"
+      )
+      .style
+      .display =
+        "none";
 
 
     setStatus(
-      "Siap scan tiket",
+
+      "Arahkan kamera ke QR tiket peserta",
+
       "waiting"
+
     );
 
 
-  } catch (err) {
+  }
 
-    console.error(err);
+  catch (error) {
+
+
+    console.error(
+      error
+    );
+
 
     setStatus(
-      "❌ Kamera tidak dapat dibuka",
+
+      "❌ Kamera tidak dapat dibuka.<br><br>" +
+      escapeHtml(
+        error.message ||
+        String(error)
+      ),
+
       "error"
+
     );
 
 
-    document.getElementById(
-      "startButton"
-    ).style.display = "inline-block";
+    document
+      .getElementById(
+        "startButton"
+      )
+      .disabled =
+        false;
 
   }
 
@@ -225,26 +718,49 @@ async function startScanner() {
 
 
 
-/* =====================================
-   QR SUCCESS
-===================================== */
+/*************************************************
+ * QR SUCCESS
+ *************************************************/
 
-function onScanSuccess(decodedText) {
+function onScanSuccess(
+  decodedText
+) {
 
-  const now = Date.now();
+
+  if (processing) {
+
+    return;
+
+  }
+
+
+  const code =
+    String(
+      decodedText || ""
+    ).trim();
+
+
+  if (!code) {
+
+    return;
+
+  }
+
+
+  const now =
+    Date.now();
 
 
   /*
-   * Anti duplicate.
-   *
-   * QR yang sama tidak boleh
-   * diproses berulang-ulang
-   * dalam waktu 3 detik.
+   * Hindari QR yang sama terbaca
+   * berulang kali ketika HP masih
+   * diarahkan ke tiket yang sama.
    */
 
   if (
-    decodedText === lastCode &&
-    now - lastScanTime < 3000
+    code === lastCode &&
+    now - lastCodeTime <
+      DUPLICATE_DELAY
   ) {
 
     return;
@@ -252,217 +768,817 @@ function onScanSuccess(decodedText) {
   }
 
 
-  lastCode = decodedText;
-  lastScanTime = now;
+  lastCode =
+    code;
+
+
+  lastCodeTime =
+    now;
+
+
+  processing =
+    true;
 
 
   /*
-   * Pause kamera supaya satu tiket
-   * hanya dikirim satu kali.
+   * Pause kamera sambil server
+   * memeriksa tiket.
    */
 
   try {
 
     html5QrCode.pause(true);
 
-  } catch (e) {
-
-    console.log(e);
-
   }
 
+  catch (e) {}
 
-  setStatus(
-    "✅ QR terbaca<br>" +
-    escapeHtml(decodedText),
-    "success"
-  );
-
-
-  /*
-   * Bunyi beep
-   */
 
   playBeep();
 
 
+  setStatus(
+
+    `
+      <div class="big">
+        ⏳ MEMERIKSA
+      </div>
+
+      <div class="ticket-code">
+        ${escapeHtml(code)}
+      </div>
+    `,
+
+    "loading"
+
+  );
+
+
+  sendCheckInRequest(
+    code
+  );
+
+}
+
+
+
+/*************************************************
+ * NORMAL SCAN FAILURE
+ *************************************************/
+
+function onScanFailure(
+  error
+) {
+
   /*
-   * Kirim QR ke halaman
-   * Google Apps Script
-   * yang membuka scanner ini.
+   * Tidak perlu melakukan apa pun.
+   *
+   * Library mencoba membaca QR
+   * berkali-kali per detik.
    */
 
-  if (window.opener) {
+}
 
-    window.opener.postMessage(
 
-      {
-        type: "QR_SCAN",
-        value: decodedText
+
+/*************************************************
+ * SEND CHECK-IN TO APPS SCRIPT
+ *************************************************/
+
+function sendCheckInRequest(
+  code
+) {
+
+
+  const pin =
+    sessionStorage
+      .getItem(
+        "checkinPin"
+      ) || "";
+
+
+  currentRequestId =
+    createRequestId();
+
+
+  const url =
+    APPS_SCRIPT_URL +
+
+    "?action=checkin" +
+
+    "&code=" +
+    encodeURIComponent(
+      code
+    ) +
+
+    "&pin=" +
+    encodeURIComponent(
+      pin
+    ) +
+
+    "&rid=" +
+    encodeURIComponent(
+      currentRequestId
+    );
+
+
+  const iframe =
+    document.getElementById(
+      "requestFrame"
+    );
+
+
+  /*
+   * Timeout bila koneksi internet
+   * atau Apps Script bermasalah.
+   */
+
+  clearTimeout(
+    requestTimer
+  );
+
+
+  requestTimer =
+    setTimeout(
+      function() {
+
+        if (!processing) {
+
+          return;
+
+        }
+
+
+        processing =
+          false;
+
+
+        currentRequestId =
+          null;
+
+
+        setStatus(
+
+          `
+            <div class="big">
+              ❌ TIMEOUT
+            </div>
+
+            Tidak mendapat jawaban
+            dari server.
+          `,
+
+          "error"
+
+        );
+
+
+        resumeScannerAfter(
+          2500
+        );
+
       },
 
-      "*"
+      CHECKIN_TIMEOUT
 
+    );
+
+
+  /*
+   * Ini membuat request langsung
+   * ke Apps Script.
+   */
+
+  iframe.src =
+    url;
+
+}
+
+
+
+/*************************************************
+ * RECEIVE RESPONSE FROM APPS SCRIPT
+ *************************************************/
+
+window.addEventListener(
+
+  "message",
+
+  function(event) {
+
+
+    const iframe =
+      document.getElementById(
+        "requestFrame"
+      );
+
+
+    /*
+     * Hanya menerima message dari
+     * iframe request kita sendiri.
+     */
+
+    if (
+      event.source !==
+      iframe.contentWindow
+    ) {
+
+      return;
+
+    }
+
+
+    const message =
+      event.data;
+
+
+    if (
+      !message ||
+      message.type !==
+        "CHECKIN_RESULT"
+    ) {
+
+      return;
+
+    }
+
+
+    if (
+      message.rid !==
+      currentRequestId
+    ) {
+
+      return;
+
+    }
+
+
+    clearTimeout(
+      requestTimer
+    );
+
+
+    currentRequestId =
+      null;
+
+
+    processing =
+      false;
+
+
+    /*
+     * Kosongkan iframe setelah request.
+     */
+
+    iframe.src =
+      "about:blank";
+
+
+    showCheckInResult(
+      message.data
     );
 
   }
 
-
-  /*
-   * tampilkan tombol scan berikutnya
-   */
-
-  document.getElementById(
-    "restartButton"
-  ).style.display = "inline-block";
-
-}
+);
 
 
 
-/* =====================================
-   QR FAILURE
-===================================== */
+/*************************************************
+ * DISPLAY RESULT
+ *************************************************/
 
-function onScanFailure(error) {
-
-  /*
-   * Jangan tampilkan error terus menerus.
-   * Scanner memang gagal membaca
-   * hampir setiap frame sampai menemukan QR.
-   */
-
-}
+function showCheckInResult(
+  data
+) {
 
 
+  if (!data) {
 
-/* =====================================
-   RESUME SCANNER
-===================================== */
+    setStatus(
 
-function resumeScanner() {
+      "❌ Respons server tidak valid",
 
-  document.getElementById(
-    "restartButton"
-  ).style.display = "none";
+      "error"
 
-
-  setStatus(
-    "Siap scan tiket berikutnya",
-    "waiting"
-  );
+    );
 
 
-  try {
+    resumeScannerAfter(
+      2500
+    );
 
-    html5QrCode.resume();
-
-  } catch (err) {
-
-    console.error(err);
+    return;
 
   }
 
+
+
+  /**************************************
+   * SUCCESS
+   **************************************/
+
+  if (
+    data.result ===
+    "SUCCESS"
+  ) {
+
+
+    setStatus(
+
+      `
+        <div class="big">
+          ✅ CHECK-IN BERHASIL
+        </div>
+
+        <div class="person-name">
+          ${escapeHtml(data.name)}
+        </div>
+
+        <div class="ticket-code">
+          ${escapeHtml(data.code)}
+        </div>
+
+        <div class="ticket-code">
+          ${escapeHtml(data.time || "")}
+        </div>
+      `,
+
+      "success"
+
+    );
+
+
+    vibrateSuccess();
+
+
+    resumeScannerAfter(
+      1800
+    );
+
+
+    return;
+
+  }
+
+
+
+  /**************************************
+   * ALREADY CHECKED IN
+   **************************************/
+
+  if (
+    data.result ===
+    "ALREADY_CHECKED_IN"
+  ) {
+
+
+    setStatus(
+
+      `
+        <div class="big">
+          ⚠️ SUDAH CHECK-IN
+        </div>
+
+        <div class="person-name">
+          ${escapeHtml(data.name)}
+        </div>
+
+        <div class="ticket-code">
+          ${escapeHtml(data.code)}
+        </div>
+
+        <div class="ticket-code">
+          Check-in pertama:
+          ${escapeHtml(data.time || "")}
+        </div>
+      `,
+
+      "used"
+
+    );
+
+
+    vibrateWarning();
+
+
+    resumeScannerAfter(
+      2500
+    );
+
+
+    return;
+
+  }
+
+
+
+  /**************************************
+   * INVALID
+   **************************************/
+
+  if (
+    data.result ===
+    "INVALID"
+  ) {
+
+
+    setStatus(
+
+      `
+        <div class="big">
+          ❌ TIKET TIDAK VALID
+        </div>
+
+        <div class="ticket-code">
+          ${escapeHtml(data.code || "")}
+        </div>
+      `,
+
+      "invalid"
+
+    );
+
+
+    vibrateWarning();
+
+
+    resumeScannerAfter(
+      2500
+    );
+
+
+    return;
+
+  }
+
+
+
+  /**************************************
+   * WRONG PIN
+   **************************************/
+
+  if (
+    data.result ===
+    "UNAUTHORIZED"
+  ) {
+
+
+    sessionStorage.removeItem(
+      "checkinPin"
+    );
+
+
+    setStatus(
+
+      `
+        <div class="big">
+          🔒 PIN SALAH
+        </div>
+
+        Silakan masukkan kembali
+        PIN panitia.
+      `,
+
+      "error"
+
+    );
+
+
+    /*
+     * Tampilkan input PIN lagi.
+     */
+
+    document
+      .getElementById(
+        "setup"
+      )
+      .style
+      .display =
+        "block";
+
+
+    document
+      .getElementById(
+        "startButton"
+      )
+      .textContent =
+        "LANJUTKAN";
+
+
+    document
+      .getElementById(
+        "startButton"
+      )
+      .disabled =
+        false;
+
+
+    return;
+
+  }
+
+
+
+  /**************************************
+   * SERVER ERROR
+   **************************************/
+
+  setStatus(
+
+    `
+      <div class="big">
+        ❌ ERROR
+      </div>
+
+      ${escapeHtml(
+        data.message ||
+        "Terjadi kesalahan."
+      )}
+    `,
+
+    "error"
+
+  );
+
+
+  resumeScannerAfter(
+    2500
+  );
+
 }
 
 
 
-/* =====================================
-   STATUS
-===================================== */
+/*************************************************
+ * AUTO RESUME
+ *************************************************/
 
-function setStatus(message, type) {
+function resumeScannerAfter(
+  delay
+) {
 
-  const element =
-    document.getElementById("status");
+
+  setTimeout(
+
+    function() {
 
 
-  element.className = type;
+      if (
+        !html5QrCode ||
+        !scannerRunning
+      ) {
 
-  element.innerHTML = message;
+        return;
+
+      }
+
+
+      try {
+
+        html5QrCode.resume();
+
+      }
+
+      catch (e) {
+
+        console.error(e);
+
+      }
+
+
+      setStatus(
+
+        "Arahkan kamera ke QR tiket berikutnya",
+
+        "waiting"
+
+      );
+
+
+    },
+
+    delay
+
+  );
 
 }
 
 
 
-/* =====================================
-   BEEP
-===================================== */
+/*************************************************
+ * BEEP
+ *************************************************/
 
 function playBeep() {
 
+
   try {
 
-    const AudioContext =
-      window.AudioContext ||
-      window.webkitAudioContext;
 
+    if (!audioContext) {
 
-    const context =
-      new AudioContext();
+      return;
+
+    }
 
 
     const oscillator =
-      context.createOscillator();
+      audioContext
+        .createOscillator();
 
 
     const gain =
-      context.createGain();
+      audioContext
+        .createGain();
 
 
-    oscillator.type = "sine";
-
-    oscillator.frequency.value = 900;
-
-
-    gain.gain.value = 0.12;
+    oscillator.type =
+      "sine";
 
 
-    oscillator.connect(gain);
+    oscillator.frequency.value =
+      900;
 
-    gain.connect(context.destination);
+
+    gain.gain.value =
+      0.12;
+
+
+    oscillator.connect(
+      gain
+    );
+
+
+    gain.connect(
+      audioContext.destination
+    );
 
 
     oscillator.start();
 
 
-    setTimeout(function() {
+    setTimeout(
 
-      oscillator.stop();
+      function() {
 
-      context.close();
+        oscillator.stop();
 
-    }, 120);
+      },
 
+      100
 
-  } catch (e) {
+    );
 
-    console.log("Beep unavailable");
 
   }
 
+  catch (e) {}
+
+}
+
+
+
+/*************************************************
+ * VIBRATION
+ *************************************************/
+
+function vibrateSuccess() {
+
+  try {
+
+    navigator.vibrate(
+      80
+    );
+
+  }
+
+  catch (e) {}
+
+}
+
+
+function vibrateWarning() {
+
+  try {
+
+    navigator.vibrate(
+      [100, 70, 100]
+    );
+
+  }
+
+  catch (e) {}
+
 }
 
 
 
-/* =====================================
-   ESCAPE HTML
-===================================== */
+/*************************************************
+ * STATUS
+ *************************************************/
 
-function escapeHtml(text) {
+function setStatus(
+  message,
+  type
+) {
 
-  return String(text || "")
 
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+  const element =
+    document.getElementById(
+      "status"
+    );
+
+
+  element.className =
+    type;
+
+
+  element.innerHTML =
+    message;
 
 }
+
+
+
+/*************************************************
+ * REQUEST ID
+ *************************************************/
+
+function createRequestId() {
+
+
+  if (
+    window.crypto &&
+    crypto.randomUUID
+  ) {
+
+    return crypto.randomUUID();
+
+  }
+
+
+  return (
+
+    Date.now()
+      .toString(36) +
+
+    "-" +
+
+    Math.random()
+      .toString(36)
+      .substring(2)
+
+  );
+
+}
+
+
+
+/*************************************************
+ * ESCAPE HTML
+ *************************************************/
+
+function escapeHtml(
+  text
+) {
+
+
+  return String(
+    text || ""
+  )
+
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+
+    .replace(
+      /</g,
+      "&lt;"
+    )
+
+    .replace(
+      />/g,
+      "&gt;"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
 
 </script>
 
 
 </body>
+
 </html>
