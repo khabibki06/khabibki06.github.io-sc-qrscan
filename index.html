@@ -366,8 +366,7 @@
 
   <h1>
 
-    📷 Scanner Kajian Akbar
-
+    📷 QR Code Scanner Semusim Cinta Rumaisa Korsel
   </h1>
 
 
@@ -959,29 +958,27 @@ function sendCheckInRequest(
 /*************************************************
  * RECEIVE RESPONSE FROM APPS SCRIPT
  *************************************************/
-
 window.addEventListener(
-
   "message",
-
   function(event) {
 
-
-    const iframe =
-      document.getElementById(
-        "requestFrame"
-      );
-
-
     /*
-     * Hanya menerima message dari
-     * iframe request kita sendiri.
+     * Apps Script HTML dapat berasal dari
+     * script.google.com atau domain sementara
+     * script.googleusercontent.com.
      */
 
-    if (
-      event.source !==
-      iframe.contentWindow
-    ) {
+    const validOrigin =
+      event.origin === "https://script.google.com" ||
+      event.origin.endsWith(".googleusercontent.com");
+
+
+    if (!validOrigin) {
+
+      console.log(
+        "Message ignored from:",
+        event.origin
+      );
 
       return;
 
@@ -994,8 +991,7 @@ window.addEventListener(
 
     if (
       !message ||
-      message.type !==
-        "CHECKIN_RESULT"
+      message.type !== "CHECKIN_RESULT"
     ) {
 
       return;
@@ -1003,10 +999,19 @@ window.addEventListener(
     }
 
 
+    /*
+     * Hanya terima response untuk request
+     * yang sedang aktif.
+     */
+
     if (
-      message.rid !==
-      currentRequestId
+      message.rid !== currentRequestId
     ) {
+
+      console.log(
+        "Wrong request ID:",
+        message.rid
+      );
 
       return;
 
@@ -1026,9 +1031,11 @@ window.addEventListener(
       false;
 
 
-    /*
-     * Kosongkan iframe setelah request.
-     */
+    const iframe =
+      document.getElementById(
+        "requestFrame"
+      );
+
 
     iframe.src =
       "about:blank";
@@ -1039,9 +1046,7 @@ window.addEventListener(
     );
 
   }
-
 );
-
 
 
 /*************************************************
