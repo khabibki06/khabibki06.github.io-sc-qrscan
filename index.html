@@ -48,52 +48,98 @@
       overflow: hidden;
     }
 
-    #status {
-      max-width: 550px;
-      min-height: 130px;
-      margin: 20px auto;
-      padding: 25px 15px;
-      border-radius: 15px;
-      background: #333;
-      font-size: 20px;
-      font-weight: bold;
-    }
+    /* ===================================
+   STATUS NOTIFICATION
+=================================== */
 
-    .success {
-      background: #198754 !important;
-    }
+#status {
+  position: sticky;
+  top: 8px;
+  z-index: 100;
 
-    .used {
-      background: #a06a00 !important;
-    }
+  width: 100%;
+  max-width: 550px;
 
-    .invalid {
-      background: #b02a37 !important;
-    }
+  min-height: 110px;
 
-    .loading {
-      background: #174a7e !important;
-    }
+  margin: 12px auto 18px;
+  padding: 18px 15px;
 
-    .error {
-      background: #842029 !important;
-    }
+  border-radius: 15px;
 
-    .big {
-      font-size: 28px;
-      margin-bottom: 12px;
-    }
+  background: #333;
+  color: white;
 
-    .name {
-      font-size: 26px;
-      margin: 12px 0;
-    }
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
 
-    .code {
-      font-size: 18px;
-      margin-top: 8px;
-    }
+  box-shadow:
+    0 4px 15px rgba(0, 0, 0, 0.3);
+}
 
+
+/* Menunggu scan */
+.waiting {
+  background: #333 !important;
+  color: white !important;
+}
+
+
+/* Memeriksa tiket */
+.loading {
+  background: #174a7e !important;
+  color: white !important;
+}
+
+
+/* BERHASIL - HIJAU */
+.success {
+  background: #15803d !important;
+  color: #ffffff !important;
+}
+
+
+/* SUDAH CHECK-IN - KUNING */
+.used {
+  background: #facc15 !important;
+  color: #1a1a1a !important;
+}
+
+
+/* TIKET INVALID - MERAH */
+.invalid {
+  background: #dc2626 !important;
+  color: #ffffff !important;
+}
+
+
+/* ERROR - MERAH */
+.error {
+  background: #dc2626 !important;
+  color: #ffffff !important;
+}
+
+
+/* JUDUL NOTIFIKASI */
+.big {
+  font-size: 26px;
+  margin-bottom: 8px;
+}
+
+
+/* NAMA PESERTA */
+.name {
+  font-size: 24px;
+  margin: 8px 0;
+}
+
+
+/* KODE PESERTA */
+.code {
+  font-size: 18px;
+  margin-top: 6px;
+}
     button {
       padding: 18px 30px;
       font-size: 22px;
@@ -115,18 +161,21 @@
     Semusim Cinta Rumaisa Korsel
   </div>
 
-  <button
-    id="startButton"
-    onclick="startScanner()"
-  >
-    MULAI SCAN
-  </button>
+<!-- NOTIFIKASI DI ATAS KAMERA -->
+<div id="status" class="waiting">
+  Tekan MULAI SCAN
+</div>
 
-  <div id="reader"></div>
+<!-- TOMBOL SCANNER -->
+<button
+  id="startButton"
+  onclick="startScanner()"
+>
+  MULAI SCAN
+</button>
 
-  <div id="status">
-    Tekan MULAI SCAN
-  </div>
+<!-- AREA KAMERA -->
+<div id="reader"></div>
 
 <script>
 
